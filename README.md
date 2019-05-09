@@ -4,9 +4,8 @@ Simply implements DB nest transaction manager feature with gorm, Inspired by Lar
 
 # Using Example
 
-```
-
-// bussiness logic code...
+```go
+// bussiness logic code
 func main(){
 
     // get *gorm.DB from your db manager
@@ -26,8 +25,7 @@ func main(){
 	})
 }
 
-// services code
-// bussiness logic code...
+// service logic code
 type FinanceService struct {}
 
 func (f *FinanceService) IncreaseBalance(txm *core.TransactionManager, userId int, amount float32) (rs *base.ResultState) {
