@@ -12,9 +12,9 @@ func main(){
     db := core.NewDbManager().GetDb()
 
     // init transaction manger with the active db resource
-	txm := core.NewTransactionManager(db)
+    txm := core.NewTransactionManager(db)
 
-	txm.Transaction(func() {
+    txm.Transaction(func() {
 
 		services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
 		services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
