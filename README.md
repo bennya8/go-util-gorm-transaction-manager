@@ -16,13 +16,13 @@ func main(){
 
     txm.Transaction(func() {
 
-		services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
-		services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
-		services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
+    services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
+    services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
+    services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
 
-		panic("shit happen")
+    panic("shit happen")
 
-	})
+  })
 }
 
 // service logic code
@@ -30,47 +30,47 @@ type FinanceService struct {}
 
 func (f *FinanceService) IncreaseBalance(txm *core.TransactionManager, userId int, amount float32) (rs *base.ResultState) {
 
-	db := txm.GetTx()
+  db := txm.GetTx()
 
-	defer func() {
-		if r := recover(); r != nil {
-			rs = base.NewResultState(false, fmt.Sprintf("%s", r), nil)
-		}
-	}()
+  defer func() {
+    if r := recover(); r != nil {
+      rs = base.NewResultState(false, fmt.Sprintf("%s", r), nil)
+    }
+  }()
 
-	var finance entities.Finance
+  var finance entities.Finance
 
-	err := db.Set("gorm:query_option", "FOR UPDATE").Where("user_id = ?", userId).First(&finance).Error
-	if err != nil {
-		panic(err)
-	}
-	if finance.ID <= 0 {
-		panic("Fail, custom error message")
-	}
+  err := db.Set("gorm:query_option", "FOR UPDATE").Where("user_id = ?", userId).First(&finance).Error
+  if err != nil {
+    panic(err)
+  }
+  if finance.ID <= 0 {
+    panic("Fail, custom error message")
+  }
 
-	finance.Balance += amount
+  finance.Balance += amount
 
-	err = db.Save(&finance).Error
-	if err != nil {
-		panic(err)
-	}
+  err = db.Save(&finance).Error
+  if err != nil {
+    panic(err)
+  }
 
-	return base.NewResultState(true, "Success", nil)
+  return base.NewResultState(true, "Success", nil)
 }
 
 // common response result pack for services
 type ResultState struct {
-	State   bool        `json:"state"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+  State   bool        `json:"state"`
+  Message string      `json:"message"`
+  Data    interface{} `json:"data"`
 }
 
 func NewResultState(state bool, message string, data interface{}) *ResultState {
-	return &ResultState{
-		State:   state,
-		Message: message,
-		Data:    data,
-	}
+  return &ResultState{
+    State:   state,
+    Message: message,
+    Data:    data,
+  }
 }
 
 
