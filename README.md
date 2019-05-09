@@ -17,24 +17,24 @@ func main(){
 
     txm.Transaction(func() {
 
-		result := services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
-		// check service response state, if something goes wrong, just need to call panic() to trigger an error, all transactions will be rollback
-		if !result.State {
-			panic(result.Message)
-		}
-		
-		result = services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
-		if !result.State {
-			panic(result.Message)
-		}
+    result := services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
+    // check service response state, if something goes wrong, just need to call panic() to trigger an error, all transactions will be rollback
+    if !result.State {
+      panic(result.Message)
+    }
+    
+    result = services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
+    if !result.State {
+      panic(result.Message)
+    }
 
-		result = services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
-		if !result.State {
-			panic(result.Message)
-		}
-	
-		// trigger an error, above transactions will automatically rollback
-		panic("something happen")
+    result = services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
+    if !result.State {
+      panic(result.Message)
+    }
+  
+    // trigger an error, above transactions will automatically rollback
+    panic("something happen")
   })
 }
 
@@ -65,13 +65,13 @@ func (f *FinanceService) IncreaseBalance(txm *core.TransactionManager, userId in
   err = db.Save(&finance).Error
   if err != nil {
     panic(err)
-	}
-	
-	// nest call anthoer service 
-	result = services.NewCreditService().IncreaseCredit(txm, 18, 0.04)
-	if !result.State {
-		panic(result.Message)
-	}
+  }
+  
+  // nest call anthoer service 
+  result = services.NewCreditService().IncreaseCredit(txm, 18, 0.04)
+  if !result.State {
+    panic(result.Message)
+  }
 
   return base.NewResultState(true, "Success", nil)
 }
