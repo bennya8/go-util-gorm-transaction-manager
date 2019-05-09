@@ -9,13 +9,13 @@ Simply implements DB nest transaction manager feature with gorm, Inspired by Lar
 
 func main(){
 
-    // get *gorm.DB from your db manager
-    db := core.NewDbManager().GetDb()
+  // get *gorm.DB from your db manager
+  db := core.NewDbManager().GetDb()
 
-    // init transaction manger with the active db resource
-    txm := core.NewTransactionManager(db)
+  // init transaction manger with the active db resource
+  txm := core.NewTransactionManager(db)
 
-    txm.Transaction(func() {
+  txm.Transaction(func() {
 
     result := services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
     // check service response state, if something goes wrong, just need to call panic() to trigger an error, all transactions will be rollback
