@@ -16,12 +16,10 @@ func main(){
 
     txm.Transaction(func() {
 
-    services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
-    services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
-    services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
-
-    panic("shit happen")
-
+    	services.NewFinanceService().IncreaseBalance(txm, 18, 0.01)
+    	services.NewFinanceService().IncreaseBalance(txm, 18, 0.04)
+    	services.NewFinanceService().IncreaseBalance(txm, 18, 0.06)
+    	panic("something happen")
   })
 }
 
