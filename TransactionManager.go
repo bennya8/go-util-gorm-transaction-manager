@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
+	"sync/atomic"
 )
 
 type TransactionManager struct {
@@ -48,7 +49,7 @@ func (t *TransactionManager) begin() {
 	}
 
 	// increase arc var
-	t.transCounter++
+	atomic.AddInt64(&t.transCounter, 1)
 	fmt.Println("transactionManager.begin transCounter->", t.transCounter)
 
 	// @todo maybe fire [beganTransaction] event
@@ -61,7 +62,9 @@ func (t *TransactionManager) commit() {
 	}
 
 	// trigger this to be maintains the ref counting
-	t.transCounter = t.max(0, t.transCounter-1)
+	if t.transCounter > 0 {
+		atomic.AddInt64(&t.transCounter, -1)
+	}
 	fmt.Println("transactionManager.commit transCounter->", t.transCounter)
 
 	// @todo maybe fire [committed] event
