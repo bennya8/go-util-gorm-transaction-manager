@@ -1,7 +1,7 @@
 # Golang Gorm Transaction Manager (Deprecated)
 
 
-***Warning: this repository is stop maitaince, since GORM v2 is release with original supprted nest tx feature.***
+***Warning: this repository is stop maintenance, since GORM v2 is release natively supprted nest tx feature.***
 
 ## @SEE
 
