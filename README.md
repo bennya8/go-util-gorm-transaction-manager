@@ -1,4 +1,14 @@
-# Golang Gorm Transaction Manager
+# Golang Gorm Transaction Manager (Deprecated)
+
+
+***Warning: this repository is stop maitaince, since GORM v2 is release with original supprted nest tx feature.***
+
+## @SEE
+
+GORM v2
+
+https://gorm.io/docs/transactions.html#Nested-Transactions
+
 
 Simply implements DB nest transaction manager feature with gorm, Inspired by Laravel framework (Experimental)
 
